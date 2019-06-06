@@ -22,51 +22,183 @@ char pressedKey;
 
 void main (void)
 {
-    WDT_A_hold(WDT_A_BASE);     // Stop watchdog timer
+#if 0
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN1);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN3);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN6);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN7);
 
-    // ROWS ARE OUTPUTS
-    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN4);                  // Row 1: Output direction
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN1);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN3);
     GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4);
-    //GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN6);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN7);
 
 
 
-    // COLUMNS ARE ISR TRIGGERS
-    _EINT();        // Start interrupt
-    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);     // Column 1: Input direction
-    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN5, GPIO_LOW_TO_HIGH_TRANSITION);
-    GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN5);
-    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN5);
-    GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN5);
+    GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN7);
+
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN5);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN7);
 
 
+
+    GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN0);
+    GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN1);
+    GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN2);
+    GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN3);
+
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN1);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN2);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN3);
+
+
+
+    GPIO_setAsOutputPin(GPIO_PORT_P8, GPIO_PIN0);
+    GPIO_setAsOutputPin(GPIO_PORT_P8, GPIO_PIN1);
+    GPIO_setAsOutputPin(GPIO_PORT_P8, GPIO_PIN2);
+    GPIO_setAsOutputPin(GPIO_PORT_P8, GPIO_PIN3);
+
+    GPIO_setOutputLowOnPin(GPIO_PORT_P8, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P8, GPIO_PIN1);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P8, GPIO_PIN2);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P8, GPIO_PIN3);
+
+////////////////////////////////
+
+
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN1);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN3);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN7);
+
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN5);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN7);
+
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN0);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN1);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN2);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN3);
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P8, GPIO_PIN0);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P8, GPIO_PIN1);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P8, GPIO_PIN2);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P8, GPIO_PIN3);
+#endif
+
+    PMM_unlockLPM5();\
+
+    P1DIR |= ((1 << 3) | (1 << 4) | (1 << 5));
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+
+    P1OUT |= (1 << 3);
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+    P1OUT |= (1 << 4);
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+    P1OUT |= (1 << 5);
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+    P1OUT |= ((1 << 3) | (1 << 4));
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+    P1OUT |= ((1 << 3) | (1 << 5));
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+    P1OUT |= (1 << 4) | (1 << 5);
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+
+    P1OUT |= ((1 << 3) | (1 << 4) | (1 << 5));
+    P1OUT &= ~((1 << 3) | (1 << 4) | (1 << 5));
+
+#if 0
+
+    /*
+    WDT_A_hold(WDT_A_BASE);     // Stop watchdog timer
+    PMM_unlockLPM5();           // Need this for LED to turn on- in case of "abnormal off state"
+
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4);
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN4);
+    //__delay_cycles(2);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4);*/
     P1DIR |= 0x10;
     P1OUT &= ~(0x10);
 
+    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);     // Column 2: Input direction
+    GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN5, GPIO_LOW_TO_HIGH_TRANSITION);
+    GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+
     for (;;){
         P1OUT ^= 0x10;
-        __delay_cycles(4);
+        __delay_cycles(3);
         P1OUT ^= 0x10;
         __delay_cycles(400000);
     }
-    /*
 
-    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);     // Column 2: Input direction
-    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN3, GPIO_HIGH_TO_LOW_TRANSITION);
+#endif
+
+
+#if 0
+
+    // ROWS ARE OUTPUTS
+    //GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN4);                  // Row 1: Output direction
+    //GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4);
+
+/*
+   // COLUMNS ARE ISR TRIGGERS
+    GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN5, GPIO_LOW_TO_HIGH_TRANSITION);
+    */
+/*
     GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN3);
-    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN3);
     GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN3);
+    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN3, GPIO_HIGH_TO_LOW_TRANSITION);
 */
+    //GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+
+    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);     // Column 2: Input direction
+    GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN5);
+    GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN5, GPIO_LOW_TO_HIGH_TRANSITION);
+    GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN5);
+    //GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN5);
 
 
-    PMM_unlockLPM5();           // Need this for LED to turn on- in case of "abnormal off state"
+    _EINT();        // Start interrupt
+#endif
+
     __bis_SR_register(LPM4_bits + GIE);     // Need this for interrupts or else "abnormal termination"
     __no_operation();           //For debugger
+
+    while (1)
+    {
+
+    }
 }
 
 void Key()
 {
-
+/*
         GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4); // Row 1- LOW
         if (GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN5) == GPIO_INPUT_PIN_LOW)     // Column 1 to GND
             pressedKey = hexaKeys[0][0];        // Shows "1"
@@ -79,15 +211,15 @@ void Key()
 
         GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN4); // Row 1- LOW
 
-
+*/
 }
 
 #pragma vector = PORT1_VECTOR       // Using PORT1_VECTOR interrupt because P1.4 and P1.5 are in port 1
 __interrupt void PORT1_ISR(void)
 {
-    Key();
 
-    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN3);
-    GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN4);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN4);
+
     GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN5);
 }
